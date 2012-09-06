@@ -1,9 +1,13 @@
 #!/usr/bin/python
-import re,sys,pprint
+import re
+import sys
+import pprint
 import commands
-import optparse,logging
+import optparse
+import logging
 import boto, boto.ec2, boto.ec2.cloudwatch
-import metrics,time 
+import metrics
+import time 
 
 pp             = pprint.PrettyPrinter(indent=4)
 thisInstanceId = commands.getoutput("wget -q -O - http://169.254.169.254/latest/meta-data/instance-id")
@@ -14,10 +18,17 @@ def main():
 
 	(options,args) = optionParser()
 	conn = boto.ec2.cloudwatch.connect_to_region(thisRegion[:-1])
+	timeout = 3
+
  	### Apache Metrics
 	metricname  = "Apache"
 	unitname = "Count"		
 	apachemetrics = metrics.apacheMetrics()
+
+	if options.verbose:
+		print "Gathering Apache metrics"
+		print "Trying to restart %s times before submitting metrics if Apache is dead.\n" % options.retry
+		
 
 	# For disk we always want percentage used (other options: free/used bytes)
 	metvals = apachemetrics.status()
@@ -27,10 +38,13 @@ def main():
 			break
 		else:
 			if options.verbose:
-				print "Apache not running... Trying apache2 restart..."
+				print "Exitcode of 'service apache2 status' is %s" % metvals["status"]
+				print "So Apache appears not to be running."
+				print "Trying apache2 restart..."
 				print commands.getoutput("service apache2 start")
-			metvals = apachemetrics.running()
-			time.sleep(5)		
+				print "Waiting for %s seconds before continuing." % str(timeout)
+			metvals = apachemetrics.status()
+			time.sleep(timeout)		
 
 	if options.verbose: 
 		print "Apache metrics:" 

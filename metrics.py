@@ -52,6 +52,6 @@ class apacheMetrics:
 	apacheMetrics = {}
 	# service apache status
 	def status(self):
-		self.apacheMetrics["status"] = commands.getstatusoutput('service apache2 status')[0]
+		self.apacheMetrics["status"] = commands.getstatusoutput('service apache2 status')[0] >> 8
 		return self.apacheMetrics
 
