@@ -51,8 +51,7 @@ class memoryMetrics:
 class apacheMetrics:
 	apacheMetrics = {}
 	# service apache status
-	def running(self):
+	def status(self):
 		self.apacheMetrics["status"] = commands.getstatusoutput('service apache2 status')[0]
-		
 		return self.apacheMetrics
 

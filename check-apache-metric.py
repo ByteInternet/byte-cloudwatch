@@ -20,7 +20,7 @@ def main():
 	apachemetrics = metrics.apacheMetrics()
 
 	# For disk we always want percentage used (other options: free/used bytes)
-	metvals = apachemetrics.running()
+	metvals = apachemetrics.status()
 
 	for n in range(0,int(options.retry)):
 		if metvals["status"] == 0:
