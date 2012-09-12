@@ -12,7 +12,7 @@ namespace           = "Byte/System"
 conn                = boto.ec2.cloudwatch.connect_to_region(thisRegion[:-1])
 alarmname           = thisInstanceId + "ApacheStatus"
 metricname          = "Apachestatus"
-unitname            = "Average"	
+unitname            = "Maximum"	
 apachemetrics       = metrics.apacheMetrics()
 dimensions          = {"instanceId" : thisInstanceId}
 

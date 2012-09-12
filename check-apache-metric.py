@@ -22,7 +22,7 @@ def main():
 
  	### Apache Metrics
 	metricname  = "Apache"
-	unitname = "Count"		
+	unitname = None"		
 	apachemetrics = metrics.apacheMetrics()
 
 	if options.verbose:
