@@ -22,7 +22,7 @@ def main():
 
  	### Apache Metrics
 	metricname  = "Apache"
-	unitname = "None"		
+	unitname = "Count"		
 	apachemetrics = metrics.apacheMetrics()
 
 	if options.verbose:
@@ -57,6 +57,7 @@ def main():
 							 value=val,
 							 unit=unitname,
 							 dimensions=dict(instanceId=thisInstanceId))
+		print val
 	sys.exit(0)
 
 def optionParser():
