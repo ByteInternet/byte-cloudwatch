@@ -26,6 +26,7 @@ def main():
 	apachemetrics = metrics.apacheMetrics()
 
 	if options.verbose:
+		print "I am inctance: "+ thisInstanceId
 		print "Gathering Apache metrics"
 		print "Trying to restart %s times before submitting metrics if Apache is dead.\n" % options.retry
 		
@@ -57,6 +58,13 @@ def main():
 							 value=val,
 							 unit=unitname,
 							 dimensions=dict(instanceId=thisInstanceId))
+	if options.verbose:
+		print "Submitting the following data:"
+		print "Namespace %s , value %s , unitname %s" % (metricname+m, val, unitname)
+		print "Dimensions: %s " % str(dict(instanceId=thisInstanceId))
+		
+
+
 	sys.exit(0)
 
 def optionParser():
