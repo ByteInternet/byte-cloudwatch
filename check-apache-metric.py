@@ -42,7 +42,7 @@ def main():
 				print "Exitcode of 'service apache2 status' is %s" % metvals["status"]
 				print "So Apache appears not to be running."
 				print "Trying apache2 restart..."
-				print commands.getoutput("service apache2 start")
+				print commands.getoutput("/usr/sbin/service apache2 start")
 				print "Waiting for %s seconds before continuing." % str(timeout)
 			metvals = apachemetrics.status()
 			time.sleep(timeout)		
