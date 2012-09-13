@@ -64,7 +64,6 @@ def main():
 		print "Dimensions: %s " % str(dict(instanceId=thisInstanceId))
 		
 
-
 	sys.exit(0)
 
 def optionParser():
