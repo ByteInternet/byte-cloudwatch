@@ -32,6 +32,7 @@ def main():
 		
 	metvals = apachemetrics.status()
 
+	# Try to restart Apache if metrics show that apache is down (exitcode != 0)
 	for n in range(0,int(options.retry)):
 		if metvals["status"] == 0:
 			break
@@ -49,6 +50,7 @@ def main():
 		print "Apache metrics:" 
 		pp.pprint(metvals)
 
+	### Push metrics to amazon
 	for m in metvals:
 		val = float(metvals[m])
 		conn.put_metric_data(namespace=namespace,
