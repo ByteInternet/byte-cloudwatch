@@ -28,10 +28,8 @@ def main():
 	if options.verbose:
 		print "I am inctance: "+ thisInstanceId
 		print "Gathering Apache metrics"
-		print "Trying to restart %s times before submitting metrics if Apache is dead.\n" % options.retry
+		print "Trying to restart %s time(s) before submitting metrics if Apache is dead.\n" % options.retry
 		
-
-	# For disk we always want percentage used (other options: free/used bytes)
 	metvals = apachemetrics.status()
 
 	for n in range(0,int(options.retry)):
