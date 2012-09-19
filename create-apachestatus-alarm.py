@@ -51,6 +51,6 @@ ApacheStatusAlarm   = MetricAlarm(name=alarmname,
                                     threshold='2',
                                     period='60',
                                     evaluation_periods=2,
-				    alarm_action=alarm_actions,
+				    alarm_actions=alarm_actions,
                                     dimensions=dimensions)
 clconn.create_alarm(ApacheStatusAlarm)
