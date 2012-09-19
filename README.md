@@ -6,3 +6,5 @@ This repository provides scripts to setup cloudwatch (multinode branch) or to mo
     * -r: Number of Apache retries before submit
 * metrics.py (undef) - Robin?
 * put-system-metrics.py (undef) - Robin?
+
+check-apache-metric.py should be run every minute (using cron, for example) to effectively monitor apache.
