@@ -36,10 +36,12 @@ ScalingDownPolicy = ScalingPolicy(name='ctScaleDown',
                                               scaling_adjustment=-1,
                                               cooldown=180)
 
-policy = asconn.create_scaling_policy(ScalingDownPolicy)
+asconn.create_scaling_policy(ScalingDownPolicy)
+
+ScaleDownPolicy = boto.ec2.autoscale.get_all_policies(as_group=thisAutoScalename, policy_names=['ctScaleDown'])[0]
 
 alarm_actions       = []
-alarm_actions.append(policy.policy_arn)
+alarm_actions.append(ScaleDownPolicy.policy_arn)
 
 ApacheStatusAlarm   = MetricAlarm(name=alarmname,
                                     namespace=namespace,
