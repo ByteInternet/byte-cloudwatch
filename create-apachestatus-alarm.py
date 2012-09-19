@@ -38,7 +38,7 @@ ScalingDownPolicy = ScalingPolicy(name='ctScaleDown',
 
 asconn.create_scaling_policy(ScalingDownPolicy)
 
-ScaleDownPolicy = boto.ec2.autoscale.get_all_policies(as_group=thisAutoScalename, policy_names=['ctScaleDown'])[0]
+ScaleDownPolicy = asconn.get_all_policies(as_group=thisAutoScalename, policy_names=['ctScaleDown'])[0]
 
 alarm_actions       = []
 alarm_actions.append(ScaleDownPolicy.policy_arn)
