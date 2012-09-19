@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import re,sys,pprint
 import commands
-import boto, boto.ec2, boto.ec2.cloudwatch
+import boto, boto.ec2, boto.ec2.cloudwatch, boto.ec2.autoscale
 import metrics,time 
 
 from boto.ec2.cloudwatch import MetricAlarm
