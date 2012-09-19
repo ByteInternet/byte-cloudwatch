@@ -5,6 +5,7 @@ import boto, boto.ec2, boto.ec2.cloudwatch, boto.ec2.autoscale
 import metrics,time 
 
 from boto.ec2.cloudwatch import MetricAlarm
+from boto.ec2.autoscale import ScalingPolicy
 
 thisInstanceId      = commands.getoutput("wget -q -O - http://169.254.169.254/latest/meta-data/instance-id")
 thisRegion          = commands.getoutput("wget -q -O - http://169.254.169.254/latest/meta-data/placement/availability-zone")
