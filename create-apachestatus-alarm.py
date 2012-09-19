@@ -9,14 +9,36 @@ from boto.ec2.cloudwatch import MetricAlarm
 thisInstanceId      = commands.getoutput("wget -q -O - http://169.254.169.254/latest/meta-data/instance-id")
 thisRegion          = commands.getoutput("wget -q -O - http://169.254.169.254/latest/meta-data/placement/availability-zone")
 namespace           = "Byte/System"
-conn                = boto.ec2.cloudwatch.connect_to_region(thisRegion[:-1])
+# COnnections
+clconn              = boto.ec2.cloudwatch.connect_to_region(thisRegion[:-1])
+ec2conn             = ec2.connect_to_region(thisRegion[:-1])
+asconn              = boto.ec2.autoscale.connect_to_region(region_name=thisRegion[:-1])
+
+
 alarmname           = thisInstanceId + "ApacheStatus"
 metricname          = "Apachestatus"
 unitname            = "Maximum"	
 apachemetrics       = metrics.apacheMetrics()
 dimensions          = {"instanceId" : thisInstanceId}
 
+# Loop through all instances, find this instance and get it's aws:autoscaling:groupName
+all_instances       = conn.get_all_instances()
+instances           = [i for r in all_instances for i in r.instances]
+for instance in instances:
+    if instance.__dict__['id'] == thisInstanceId:
+       thisAutoScalename = instance.__dict__['tags']['aws:autoscaling:groupName']
+
+# Define the ScaleDownPolicy
+ScalingDownPolicy = ScalingPolicy(name='ctScaleDown',
+                                              adjustment_type='ChangeInCapacity',
+                                              as_name=thisAutoScalename,
+                                              scaling_adjustment=-1,
+                                              cooldown=180)
+
+asconn.create_scaling_policy(ScalingDownPolicy)
+
 alarm_actions       = []
+alarm_actions.append(ScalingDownPolicy.policy_arn)
 
 ApacheStatusAlarm   = MetricAlarm(name=alarmname,
                                     namespace=namespace,
@@ -26,5 +48,6 @@ ApacheStatusAlarm   = MetricAlarm(name=alarmname,
                                     threshold='2',
                                     period='60',
                                     evaluation_periods=2,
+				    alarm_action=alarm_actions,
                                     dimensions=dimensions)
-conn.create_alarm(ApacheStatusAlarm)
+clconn.create_alarm(ApacheStatusAlarm)
