@@ -36,10 +36,10 @@ ScalingDownPolicy = ScalingPolicy(name='ctScaleDown',
                                               scaling_adjustment=-1,
                                               cooldown=180)
 
-asconn.create_scaling_policy(ScalingDownPolicy)
+policy = asconn.create_scaling_policy(ScalingDownPolicy)
 
 alarm_actions       = []
-alarm_actions.append(ScalingDownPolicy.policy_arn)
+alarm_actions.append(policy.policy_arn)
 
 ApacheStatusAlarm   = MetricAlarm(name=alarmname,
                                     namespace=namespace,
