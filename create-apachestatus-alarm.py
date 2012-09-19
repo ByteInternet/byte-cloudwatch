@@ -22,7 +22,7 @@ apachemetrics       = metrics.apacheMetrics()
 dimensions          = {"instanceId" : thisInstanceId}
 
 # Loop through all instances, find this instance and get it's aws:autoscaling:groupName
-all_instances       = conn.get_all_instances()
+all_instances       = ec2conn.get_all_instances()
 instances           = [i for r in all_instances for i in r.instances]
 for instance in instances:
     if instance.__dict__['id'] == thisInstanceId:
