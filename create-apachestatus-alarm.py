@@ -9,9 +9,9 @@ from boto.ec2.cloudwatch import MetricAlarm
 thisInstanceId      = commands.getoutput("wget -q -O - http://169.254.169.254/latest/meta-data/instance-id")
 thisRegion          = commands.getoutput("wget -q -O - http://169.254.169.254/latest/meta-data/placement/availability-zone")
 namespace           = "Byte/System"
-# COnnections
+# Connections
 clconn              = boto.ec2.cloudwatch.connect_to_region(thisRegion[:-1])
-ec2conn             = ec2.connect_to_region(thisRegion[:-1])
+ec2conn             = boto.ec2.connect_to_region(thisRegion[:-1])
 asconn              = boto.ec2.autoscale.connect_to_region(region_name=thisRegion[:-1])
 
 
