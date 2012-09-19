@@ -29,7 +29,7 @@ def main():
 			time.sleep(timeout)		
 
 	if (metvals["status"] == 3): 
-		os.system("shutdown -h now")
+		os.system("/sbin/shutdown -h now")
 
 	sys.exit(0)
 
